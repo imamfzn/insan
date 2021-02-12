@@ -1,0 +1,30 @@
+{
+  "name": "insan",
+  "version": "0.1.0",
+  "description": "insan is a simple crud rest api service about user",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imamfzn/insan.git"
+  },
+  "keywords": [
+    "crud",
+    "user"
+  ],
+  "author": "Muhammad Imam Fauzan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imamfzn/insan/issues"
+  },
+  "homepage": "https://github.com/imamfzn/insan#readme",
+  "dependencies": {
+    "celebrate": "^13.0.4",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.15"
+  }
+}
