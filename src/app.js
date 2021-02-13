@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express');
 const mongoose = require('mongoose');
 const userRouter = require('./routes/user');
@@ -6,6 +8,11 @@ const app = express();
 
 if (!process.env.ACCESS_TOKEN_SECRET){
   console.error("ERROR: ACCESS_TOKEN_SECRET not provided!");
+  process.exit(1);
+}
+
+if (!(process.env.AUTAN_BASIC_USER && process.env.AUTAN_BASIC_PASSWORD)){
+  console.error("ERROR: AUTAN_BASIC_USER or AUTAN_BASIC_PASSWORD not provided.");
   process.exit(1);
 }
 
