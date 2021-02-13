@@ -33,6 +33,23 @@ async function register(payload){
   }
 }
 
+async function get(id){
+  try {
+    const { data } = await autan.get(`/users/${id}`);
+    return data;
+  } catch (err) {
+    if (err.response) {
+      const error = new Error(err.response.data.message || err.response.data);
+      error.statusCode = err.response.status;
+      throw error;
+    }
+
+    console.error(err);
+    throw new Error("can't get user.");
+  }
+}
+
 module.exports = {
+  get,
   register,
 };

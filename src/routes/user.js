@@ -20,6 +20,8 @@ route.put(
   UserController.create
 );
 
+route.get('/:id', UserController.get);
+
 route.get(
   '/',
   [

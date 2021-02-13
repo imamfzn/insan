@@ -11,6 +11,16 @@ async function create(req, res, next){
   }
 }
 
+async function get(req, res, next){
+  try {
+    const user = await UserService.get(req.params.id);
+
+    res.json(user);
+  } catch (e) {
+    next(e);
+  }
+}
+
 async function all (req, res, next){
   try {
     const users = await User.find();
@@ -30,6 +40,7 @@ async function update(req, res, next){
 }
 
 module.exports = {
+  get,
   create,
   all,
   delete: destroy,
