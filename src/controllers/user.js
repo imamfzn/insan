@@ -1,16 +1,9 @@
 const User = require('../models/user');
+const UserService = require('../services/user');
 
 async function create(req, res, next){
   try {
-    const user = new User({
-      auth_id: "idfromauthservice",
-      name: req.body.name,
-      email: req.body.email,
-      address: req.body.address,
-      phone: req.body.phone,
-    });
-
-    await user.save();
+    const user = await UserService.create(req.body);
 
     res.status(201).json(user);
   } catch (e) {
