@@ -18,9 +18,9 @@ async function register(payload){
     if (err.response) {
       let error;
 
-      if (err.response.status == 422) {
+      if (err.response.status == 409) {
         error = new Error("user aleady taken.");
-        error.statusCode = 422;
+        error.statusCode = 409;
       } else {
         error = new Error(err.response.data.message || err.response.data);
         error.statusCode = err.response.status;
