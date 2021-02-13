@@ -3,8 +3,8 @@ const User = require('../models/user');
 async function create(req, res, next){
   try {
     const user = new User({
+      auth_id: "idfromauthservice",
       name: req.body.name,
-      username: req.body.username,
       email: req.body.email,
       address: req.body.address,
       phone: req.body.phone,
