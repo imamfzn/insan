@@ -13,13 +13,23 @@ async function register(payload){
   try {
     const res = await autan.put('/users', payload);
 
-    if (res.status != 201){
-      throw new Error("Can't create new user to autan");
+    return res.data;
+  } catch (err) {
+    if (err.response) {
+      let error;
+
+      if (err.response.status == 422) {
+        error = new Error("user aleady taken.");
+        error.statusCode = 422;
+      } else {
+        error = new Error(err.response.data.message || err.response.data);
+        error.statusCode = err.response.status;
+      }
+
+      throw error;
     }
 
-    return res.data;
-  } catch (e) {
-    throw e;
+    throw new Error("can't create new user.");
   }
 }
 

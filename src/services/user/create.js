@@ -17,8 +17,8 @@ async function create(user){
 		await userCreate.save();
 
 		return {...userAuth, ...userCreate.toObject() };
-	} catch (error) {
-		throw error;
+	} catch (err) {
+		throw err;
 	}
 }
 
