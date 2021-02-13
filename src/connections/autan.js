@@ -49,7 +49,24 @@ async function get(id){
   }
 }
 
+async function destroy(id){
+  try {
+    await autan.delete(`/users/${id}`);
+  } catch (err) {
+    if (err.response) {
+      const error = new Error(err.response.data.message || err.response.data);
+      error.statusCode = err.response.status;
+      throw error;
+    }
+
+    console.error(err);
+    throw new Error("can't delete user.");
+  }
+}
+
 module.exports = {
   get,
   register,
+  destroy,
+  delete: destroy,
 };

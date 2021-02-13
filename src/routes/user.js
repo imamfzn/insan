@@ -21,6 +21,7 @@ route.put(
 );
 
 route.get('/:id', UserController.get);
+route.delete('/:id', UserController.delete);
 
 route.get(
   '/',

@@ -21,6 +21,16 @@ async function get(req, res, next){
   }
 }
 
+async function destroy(req, res, next){
+  try {
+    await UserService.delete(req.params.id);
+
+    res.json({ message: "user has been deleted." });
+  } catch (e) {
+    next(e);
+  }
+}
+
 async function all (req, res, next){
   try {
     const users = await User.find();
@@ -31,10 +41,6 @@ async function all (req, res, next){
   }
 }
 
-async function destroy(req, res, next){
-
-}
-
 async function update(req, res, next){
 
 }
@@ -43,6 +49,7 @@ module.exports = {
   get,
   create,
   all,
+  destroy,
   delete: destroy,
   update,
 };
