@@ -1,5 +1,5 @@
 module.exports = {
-  auth: require('./auth'),
-  authorize: require('./authorize'),
+  authorizeLogin: require('./authorize_login'),
+  authorizeRoles: require('./authorize_roles'),
   error: require('./error'),
 };

@@ -1,18 +1,18 @@
 const { Router } = require('express');
 const { celebrate, Joi } = require('celebrate');
 const UserController = require('../controllers/user');
-const middlewares = require('../middlewares');
+const middleware = require('../middlewares');
 
 const route = Router();
 
-const adminAuthorize = [
-  middlewares.auth,
-  middlewares.authorize(['admin'])
+const authorizeAdmin = [
+  middleware.authorizeLogin,
+  middleware.authorizeRoles(['admin'])
 ];
 
 route.put(
   '/',
-  adminAuthorize,
+  authorizeAdmin,
   celebrate({
     body: Joi.object({
       name: Joi.string().required(),
@@ -26,9 +26,9 @@ route.put(
   UserController.create
 );
 
-route.get('/', adminAuthorize, UserController.all);
-route.get('/:id', adminAuthorize, UserController.get);
-route.delete('/:id', adminAuthorize, UserController.delete);
+route.get('/', authorizeAdmin, UserController.all);
+route.get('/:id', authorizeAdmin, UserController.get);
+route.delete('/:id', authorizeAdmin, UserController.delete);
 
 
 module.exports = route;
