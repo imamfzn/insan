@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const userRouter = require('./routes/user');
+const middleware = require('./middlewares');
 
 const app = express();
 
@@ -23,5 +24,7 @@ mongoose
 
 app.use(express.json());
 app.use('/users', userRouter);
+app.use(middleware.error);
+
 
 app.listen(3001, () => console.log("App is running"));
