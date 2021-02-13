@@ -5,14 +5,17 @@ const mongoose = require('mongoose');
 const userRouter = require('./routes/user');
 const middleware = require('./middlewares');
 
-if (!process.env.ACCESS_TOKEN_SECRET){
-  console.error("ERROR: ACCESS_TOKEN_SECRET not provided!");
+function exitError(message){
+  console.error(`ERROR: ${message}`);
   process.exit(1);
 }
 
+if (!process.env.ACCESS_TOKEN_SECRET){
+  exitError("ACCESS_TOKEN_SECRET not provided.")
+}
+
 if (!(process.env.AUTAN_BASIC_USER && process.env.AUTAN_BASIC_PASSWORD)){
-  console.error("ERROR: AUTAN_BASIC_USER or AUTAN_BASIC_PASSWORD not provided.");
-  process.exit(1);
+  exitError("AUTAN_BASIC_USER or AUTAN_BASIC_PASSWORD not provided.");
 }
 
 const app = express();
