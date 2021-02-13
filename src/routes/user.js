@@ -5,8 +5,14 @@ const middlewares = require('../middlewares');
 
 const route = Router();
 
+const adminAuthorize = [
+  middlewares.auth,
+  middlewares.authorize(['admin'])
+];
+
 route.put(
   '/',
+  adminAuthorize,
   celebrate({
     body: Joi.object({
       name: Joi.string().required(),
@@ -20,16 +26,9 @@ route.put(
   UserController.create
 );
 
-route.get('/:id', UserController.get);
-route.delete('/:id', UserController.delete);
+route.get('/', adminAuthorize, UserController.all);
+route.get('/:id', adminAuthorize, UserController.get);
+route.delete('/:id', adminAuthorize, UserController.delete);
 
-route.get(
-  '/',
-  [
-    middlewares.auth,
-    middlewares.authorize(['admin'])
-  ],
-  UserController.all
-);
 
 module.exports = route;
