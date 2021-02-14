@@ -18,7 +18,7 @@ async function destroy(id) {
   }
 
   await user.remove();
-  await Autan.delete(user.auth_id);
+  await Autan.delete(user.authId);
 }
 
 module.exports = destroy;

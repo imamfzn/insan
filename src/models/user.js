@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const User = new mongoose.Schema({
   auth_id: {
+    alias: 'authId',
     type: String,
     require: true,
     unique: true,

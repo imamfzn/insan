@@ -16,7 +16,7 @@ describe('UserService#create', () => {
 
   const autanPayload = { username, password, role };
   const autanResult = { username, role, _id: 'auth1001' };
-  const user = new User({ username, name, auth_id: 'auth1001' });
+  const user = new User({ username, name, authId: 'auth1001' });
 
   afterEach(() => {
     sinon.restore();

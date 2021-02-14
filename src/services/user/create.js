@@ -5,7 +5,7 @@ async function create(user) {
   const { username, password, role } = user;
   const userAuth = await Autan.register({ username, password, role });
   const userCreate = new User({
-    auth_id: userAuth._id,
+    authId: userAuth._id,
     name: user.name,
     email: user.email,
     address: user.address,

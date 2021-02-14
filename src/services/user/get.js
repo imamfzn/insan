@@ -17,7 +17,7 @@ async function get(id) {
     throw error;
   }
 
-  const userAuth = await Autan.get(user.auth_id);
+  const userAuth = await Autan.get(user.authId);
 
   return { ...userAuth, ...user.toObject() };
 }
