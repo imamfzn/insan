@@ -6,10 +6,10 @@ const autan = axios.create({
   auth: {
     username: process.env.AUTAN_BASIC_USER,
     password: process.env.AUTAN_BASIC_PASSWORD,
-  }
+  },
 });
 
-async function register(payload){
+async function register(payload) {
   try {
     const res = await autan.put('/users', payload);
 
@@ -18,8 +18,8 @@ async function register(payload){
     if (err.response) {
       let error;
 
-      if (err.response.status == 409) {
-        error = new Error("user aleady taken.");
+      if (err.response.status === 409) {
+        error = new Error('user aleady taken.');
         error.statusCode = 409;
       } else {
         error = new Error(err.response.data.message || err.response.data);
@@ -33,7 +33,7 @@ async function register(payload){
   }
 }
 
-async function get(id){
+async function get(id) {
   try {
     const { data } = await autan.get(`/users/${id}`);
     return data;
@@ -49,7 +49,7 @@ async function get(id){
   }
 }
 
-async function destroy(id){
+async function destroy(id) {
   try {
     await autan.delete(`/users/${id}`);
   } catch (err) {

@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const UserService = require('../services/user');
 
-async function create(req, res, next){
+async function create(req, res, next) {
   try {
     const user = await UserService.create(req.body);
 
@@ -11,7 +11,7 @@ async function create(req, res, next){
   }
 }
 
-async function get(req, res, next){
+async function get(req, res, next) {
   try {
     const user = await UserService.get(req.params.id);
 
@@ -21,7 +21,7 @@ async function get(req, res, next){
   }
 }
 
-async function current(req, res, next){
+async function current(req, res, next) {
   try {
     const user = await UserService.current(req.token.id);
 
@@ -31,17 +31,17 @@ async function current(req, res, next){
   }
 }
 
-async function destroy(req, res, next){
+async function destroy(req, res, next) {
   try {
     await UserService.delete(req.params.id);
 
-    res.json({ message: "user has been deleted." });
+    res.json({ message: 'user has been deleted.' });
   } catch (e) {
     next(e);
   }
 }
 
-async function all (req, res, next){
+async function all(req, res, next) {
   try {
     const users = await User.find();
 
@@ -51,7 +51,7 @@ async function all (req, res, next){
   }
 }
 
-async function update(req, res, next){
+async function update(req, res, next) {
   try {
     const user = await UserService.update(req.params.id, req.body);
 

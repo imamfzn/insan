@@ -6,5 +6,5 @@ module.exports = celebrate({
     email: Joi.string().email(),
     address: Joi.string(),
     phone: Joi.string(),
-  })
+  }),
 });

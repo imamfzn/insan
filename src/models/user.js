@@ -9,22 +9,21 @@ const User = new mongoose.Schema({
   name: {
     type: String,
     minlength: 3,
-    required: true
+    required: true,
   },
   email: {
     type: String,
-    default: null
+    default: null,
   },
   address: {
     type: String,
-    default: null
+    default: null,
   },
   phone: {
     type: String,
-    default: null
-  }
+    default: null,
+  },
 },
-  { timestamps: true }
-);
+{ timestamps: true });
 
 module.exports = mongoose.model('User', User);
