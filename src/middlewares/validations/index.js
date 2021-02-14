@@ -1,4 +1,4 @@
 module.exports = {
-  createUser: require('./users/create'),
-  updateUser: require('./users/update'),
+  createUserValidation: require('./users/create'),
+  updateUserValidation: require('./users/update'),
 };

@@ -3,7 +3,7 @@ require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const userRouter = require('./routes/user');
-const middleware = require('./middlewares');
+const { errorHandler } = require('./middlewares');
 
 function exitError(message){
   console.error(`ERROR: ${message}`);
@@ -22,7 +22,7 @@ const app = express();
 
 app.use(express.json());
 app.use('/users', userRouter);
-app.use(middleware.error);
+app.use(errorHandler);
 
 (
   async function (){

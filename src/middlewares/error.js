@@ -1,6 +1,6 @@
 const { isCelebrateError } = require('celebrate');
 
-module.exports = function(err, req, res, next){
+module.exports = function errorHandler(err, req, res, next){
   if (isCelebrateError(err)){
     const details = [...err.details.entries()].map(([_, joiError]) => joiError.message);
     const message = "invalid request.";
