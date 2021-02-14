@@ -21,6 +21,16 @@ async function get(req, res, next){
   }
 }
 
+async function current(req, res, next){
+  try {
+    const user = await UserService.current(req.token.id);
+
+    res.json(user);
+  } catch (e) {
+    next(e);
+  }
+}
+
 async function destroy(req, res, next){
   try {
     await UserService.delete(req.params.id);
@@ -52,4 +62,5 @@ module.exports = {
   destroy,
   delete: destroy,
   update,
+  current,
 };
