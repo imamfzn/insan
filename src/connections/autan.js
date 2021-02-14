@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const autan = axios.create({
-  baseURL: "http://localhost:3000/_internal/",
+  baseURL: process.env.AUTAN_URL,
   timeout: 5000,
   auth: {
     username: process.env.AUTAN_BASIC_USER,
