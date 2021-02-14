@@ -17,7 +17,7 @@ if (!(process.env.AUTAN_BASIC_USER && process.env.AUTAN_BASIC_PASSWORD)) {
 }
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(requestLog);
@@ -34,7 +34,7 @@ async function start() {
     },
   );
 
-  app.listen(3001, () => logger.info(`Insan is running on port ${port}`));
+  app.listen(port, () => logger.info(`Insan is running on port ${port}`));
 }
 
 start();
