@@ -4,6 +4,7 @@
   "description": "insan is a simple crud rest api service about user",
   "main": "index.js",
   "scripts": {
+    "start": "node src/app.js",
     "test": "jest",
     "lint": "./node_modules/.bin/eslint src"
   },
