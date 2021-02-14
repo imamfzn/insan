@@ -25,6 +25,11 @@ const User = new mongoose.Schema({
     default: null,
   },
 },
-{ timestamps: true });
+{
+  timestamps: {
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  },
+});
 
 module.exports = mongoose.model('User', User);
