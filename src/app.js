@@ -2,23 +2,22 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+const logger = require('./lib/logger');
 const userRouter = require('./routes/user');
 const { errorHandler, requestLog } = require('./middlewares');
 
-function exitError(message) {
-  console.error(`ERROR: ${message}`);
+if (!process.env.ACCESS_TOKEN_SECRET) {
+  logger.fatal('ACCESS_TOKEN_SECRET not provided.');
   process.exit(1);
 }
 
-if (!process.env.ACCESS_TOKEN_SECRET) {
-  exitError('ACCESS_TOKEN_SECRET not provided.');
-}
-
 if (!(process.env.AUTAN_BASIC_USER && process.env.AUTAN_BASIC_PASSWORD)) {
-  exitError('AUTAN_BASIC_USER or AUTAN_BASIC_PASSWORD not provided.');
+  logger.fatal('AUTAN_BASIC_USER or AUTAN_BASIC_PASSWORD not provided.');
+  process.exit(1);
 }
 
 const app = express();
+const port = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(requestLog);
@@ -35,7 +34,7 @@ async function start() {
     },
   );
 
-  app.listen(3001, () => console.log('Insan is running on port 3001.'));
+  app.listen(3001, () => logger.info(`Insan is running on port ${port}`));
 }
 
 start();

@@ -1,4 +1,5 @@
 const axios = require('axios');
+const logger = require('../lib/logger');
 
 const autan = axios.create({
   baseURL: process.env.AUTAN_URL,
@@ -44,7 +45,7 @@ async function get(id) {
       throw error;
     }
 
-    console.error(err);
+    logger.error(err);
     throw new Error("can't get user.");
   }
 }
@@ -59,7 +60,7 @@ async function destroy(id) {
       throw error;
     }
 
-    console.error(err);
+    logger.error(err);
     throw new Error("can't delete user.");
   }
 }

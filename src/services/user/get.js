@@ -1,4 +1,5 @@
 const User = require('../../models/user');
+const logger = require('../../lib/logger');
 const Autan = require('../../connections/autan');
 
 async function get(id) {
@@ -6,7 +7,7 @@ async function get(id) {
   try {
     user = await User.findById(id);
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     throw new Error("something wrong, can't get user.");
   }
 

@@ -1,12 +1,13 @@
 const User = require('../../models/user');
 const Autan = require('../../connections/autan');
+const logger = require('../../lib/logger');
 
 async function current(authId) {
   let user;
   try {
     user = await User.findOne({ auth_id: authId });
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     throw new Error("something wrong, can't get user.");
   }
 
