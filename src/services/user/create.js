@@ -14,7 +14,11 @@ async function create(user) {
 
   await userCreate.save();
 
-  return { ...userAuth, ...userCreate.toObject() };
+  return {
+    ...userCreate.toObject(),
+    username,
+    role,
+  };
 }
 
 module.exports = create;
