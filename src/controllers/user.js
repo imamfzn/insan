@@ -52,7 +52,13 @@ async function all (req, res, next){
 }
 
 async function update(req, res, next){
+  try {
+    const user = await UserService.update(req.params.id, req.body);
 
+    res.json(user);
+  } catch (e) {
+    next(e);
+  }
 }
 
 module.exports = {

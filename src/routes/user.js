@@ -9,5 +9,6 @@ route.put('/', authorizeAdmin, validation.createUser, UserController.create);
 route.get('/me', authorizeLogin, UserController.current);
 route.get('/:id', authorizeAdmin, UserController.get);
 route.delete('/:id', authorizeAdmin, UserController.delete);
+route.patch('/:id', authorizeAdmin, validation.updateUser, UserController.update);
 
 module.exports = route;

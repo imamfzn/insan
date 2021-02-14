@@ -3,4 +3,5 @@ module.exports = {
   delete: require('./delete'),
   create: require('./create'),
   current: require('./current'),
+  update: require('./update'),
 };
