@@ -1,13 +1,16 @@
-const { isCelebrateError } = require('celebrate');
+const error = require('../lib/error');
+const logger = require('../lib/logger');
 
 module.exports = function errorHandler(err, req, res, next) {
-  if (isCelebrateError(err)) {
-    const details = [...err.details.entries()].map(([, joiError]) => joiError.message);
-    const message = 'invalid request.';
+  if (err instanceof error.InsanError) {
+    if (err.class == error.InsanError) {
+      logger.error(error);
+    }
 
-    return res.status(400).json({ message, details });
+    return res.status(err.httpStatus).json({ message: err.message });
   }
 
+  logger.error(err);
   const statusCode = err.statusCode || 500;
   const message = err.message || 'something wrong.';
 

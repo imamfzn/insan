@@ -1,9 +1,9 @@
 require('dotenv').config();
 
+const db = require('mongoose');
 const express = require('express');
-const mongoose = require('mongoose');
 const logger = require('./lib/logger');
-const userRouter = require('./routes/user');
+const routes = require('./routes');
 const { errorHandler, requestLog } = require('./middlewares');
 
 if (!process.env.ACCESS_TOKEN_SECRET) {
@@ -21,25 +21,19 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(requestLog);
-app.use('/users', userRouter);
+app.use('/users', routes);
 app.use(errorHandler);
 
-async function start() {
-  try {
-    await mongoose.connect(
-      process.env.MONGODB_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
-      },
-    );
-  } catch (err) {
-    logger.error(err);
-    process.exit(1);
-  }
-
+db.connect(
+  process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  },
+).then(() => {
   app.listen(port, () => logger.info(`Insan is running on port ${port}`));
-}
-
-start();
+}).catch((err) => {
+  logger.error(err);
+  process.exit(1);
+});

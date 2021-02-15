@@ -7,6 +7,6 @@ function getTokenFromHeader(req) {
 module.exports = jwt({
   algorithms: ['HS256'],
   secret: process.env.ACCESS_TOKEN_SECRET,
-  userProperty: 'token',
+  userProperty: 'user',
   getToken: getTokenFromHeader,
 });

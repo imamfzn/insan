@@ -1,72 +1,46 @@
+const humps = require('humps');
 const User = require('../models/user');
 const UserService = require('../services/user');
 
-async function create(req, res, next) {
-  try {
-    const user = await UserService.create(req.body);
-
-    res.status(201).json(user);
-  } catch (e) {
-    next(e);
-  }
+function sendResponse(res, status = 200) {
+  return function (payload) {
+    return res.status(status).json(
+      humps.decamelizeKeys(payload),
+    );
+  };
 }
 
-async function get(req, res, next) {
-  try {
-    const user = await UserService.get(req.params.id);
-
-    res.json(user);
-  } catch (e) {
-    next(e);
-  }
+function create(req, res, next) {
+  UserService.create(req.body).then(sendResponse(res, 201)).catch(next);
 }
 
-async function current(req, res, next) {
-  try {
-    const user = await UserService.current(req.token.id);
-
-    res.json(user);
-  } catch (e) {
-    next(e);
-  }
+function get(req, res, next) {
+  UserService.get(req.params.id).then(sendResponse(res)).catch(next);
 }
 
-async function destroy(req, res, next) {
-  try {
-    await UserService.delete(req.params.id);
-
-    res.json({ message: 'user has been deleted.' });
-  } catch (e) {
-    next(e);
-  }
+function current(req, res, next) {
+  UserService.current(req.user.id).then(sendResponse(res)).catch(next);
 }
 
-async function all(req, res, next) {
-  try {
-    const users = await User.find();
-
-    res.status(200).json(users);
-  } catch (e) {
-    next(e);
-  }
+function remove(req, res, next) {
+  UserService.remove(req.params.id)
+    .then(() => res.json({ message: 'User has been deleted.' }))
+    .catch(next);
 }
 
-async function update(req, res, next) {
-  try {
-    const user = await UserService.update(req.params.id, req.body);
+function all(req, res, next) {
+  UserService.all().then(sendResponse(res)).catch(next);
+}
 
-    res.json(user);
-  } catch (e) {
-    next(e);
-  }
+function update(req, res, next) {
+  UserService.update(req.params.id, req.body).then(sendResponse(res)).catch(next);
 }
 
 module.exports = {
   get,
   create,
   all,
-  destroy,
-  delete: destroy,
+  remove,
   update,
   current,
 };

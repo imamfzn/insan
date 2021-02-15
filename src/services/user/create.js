@@ -3,21 +3,20 @@ const Autan = require('../../connections/autan');
 
 async function create(user) {
   const { username, password, role } = user;
-  const userAuth = await Autan.register({ username, password, role });
-  const userCreate = new User({
-    authId: userAuth._id,
+  const auth = await Autan.register({ username, password, role });
+  const created = await User.create({
+    authId: auth.id,
     name: user.name,
     email: user.email,
     address: user.address,
     phone: user.phone,
-  });
+  })
 
-  await userCreate.save();
+  delete auth.id;
 
   return {
-    ...userCreate.toObject(),
-    username,
-    role,
+    ...created.toJSON(),
+    ...auth,
   };
 }
 

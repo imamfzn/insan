@@ -1,5 +1,5 @@
 const axios = require('axios');
-const logger = require('../lib/logger');
+const error = require('../lib/error');
 
 const autan = axios.create({
   baseURL: process.env.AUTAN_URL,
@@ -12,25 +12,21 @@ const autan = axios.create({
 
 async function register(payload) {
   try {
-    const res = await autan.put('/users', payload);
-
-    return res.data;
+    const { data } = await autan.post('/users', payload);
+    return data;
   } catch (err) {
-    if (err.response) {
-      let error;
-
-      if (err.response.status === 409) {
-        error = new Error('user aleady taken.');
-        error.statusCode = 409;
-      } else {
-        error = new Error(err.response.data.message || err.response.data);
-        error.statusCode = err.response.status;
-      }
-
-      throw error;
+    if (!err.response) {
+      throw new error.InsanError('Can\'t create new user');
     }
 
-    throw new Error("can't create new user.");
+    if (err.response.status === 409) {
+      throw new error.UserAlreadyUsedError();
+    }
+
+    throw new error.InsanError(
+      err.response.data.message || err.response.data,
+      err.response.status,
+    );
   }
 }
 
@@ -39,35 +35,38 @@ async function get(id) {
     const { data } = await autan.get(`/users/${id}`);
     return data;
   } catch (err) {
-    if (err.response) {
-      const error = new Error(err.response.data.message || err.response.data);
-      error.statusCode = err.response.status;
-      throw error;
+    if (!err.response) {
+      throw new error.InsanError('Can\'t reterive user');
     }
 
-    logger.error(err);
-    throw new Error("can't get user.");
+    if (err.response.status === 404) {
+      throw new error.UserNotFoundError();
+    }
+
+    throw new error.InsanError(
+      err.response.data.message || err.response.data,
+      err.response.status,
+    );
   }
 }
 
-async function destroy(id) {
+async function remove(id) {
   try {
     await autan.delete(`/users/${id}`);
   } catch (err) {
-    if (err.response) {
-      const error = new Error(err.response.data.message || err.response.data);
-      error.statusCode = err.response.status;
-      throw error;
+    if (!err.response) {
+      throw new error.InsanError('Can\'t remove user');
     }
 
-    logger.error(err);
-    throw new Error("can't delete user.");
+    throw new error.InsanError(
+      err.response.data.message || err.response.data,
+      err.response.status,
+    );
   }
 }
 
 module.exports = {
   get,
   register,
-  destroy,
-  delete: destroy,
+  remove,
 };

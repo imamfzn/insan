@@ -1,25 +1,16 @@
 const User = require('../../models/user');
 const Autan = require('../../connections/autan');
-const logger = require('../../lib/logger');
 
 async function current(authId) {
-  let user;
-  try {
-    user = await User.findOne({ auth_id: authId });
-  } catch (err) {
-    logger.error(err);
-    throw new Error("something wrong, can't get user.");
-  }
-
+  const user = await User.findOne({ auth_id: authId });
   if (!user) {
-    const error = new Error('user not found.');
-    error.statusCode = 404;
-    throw error;
+    throw 'User not found';
   }
 
-  const userAuth = await Autan.get(authId);
+  const auth = await Autan.get(authId);
+  delete auth.id;
 
-  return { ...userAuth, ...user.toObject() };
+  return { ...user.toJSON(), ...auth };
 }
 
 module.exports = current;
