@@ -1,5 +1,4 @@
 const humps = require('humps');
-const User = require('../models/user');
 const UserService = require('../services/user');
 
 function sendResponse(res, status = 200) {
@@ -14,7 +13,7 @@ function create(req, res, next) {
   UserService.create(req.body).then(sendResponse(res, 201)).catch(next);
 }
 
-function get(req, res, next) {
+async function get(req, res, next) {
   UserService.get(req.params.id).then(sendResponse(res)).catch(next);
 }
 

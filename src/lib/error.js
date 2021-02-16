@@ -18,6 +18,12 @@ class ValidationError extends InsanError {
   }
 }
 
+class UnauthorizedError extends InsanError {
+  constructor(message = 'You aren\'t authorized to access this') {
+    super(message, 401);
+  }
+}
+
 class InvalidLoginError extends InsanError {
   constructor(message = 'Username or password incorrect') {
     super(message, 401);
