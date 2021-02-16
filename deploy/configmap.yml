@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: insan
+data:
+  AUTAN_BASIC_USER: autan
+  AUTAN_BASIC_PASSWORD: autan
+  ACCESS_TOKEN_SECRET: secret
+  AUTAN_URL: http://autan:3000
+  MONGODB_URL: mongodb://192.168.49.1:27020/insan
