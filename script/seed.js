@@ -4,14 +4,14 @@ const UserService = require('../src/services/user');
 
 const user = {
   username: 'gatotkaca',
-  password: process.env.INIT_USER_PASSWORD,
+  password: process.env.SEED_PASSWORD,
   email: 'gatotkaca@gmail.com',
   name: 'Gatot',
 };
 
 const admin = {
   username: 'ultraman',
-  password: process.env.INIT_ADMIN_PASSWORD,
+  password: process.env.SEED_PASSWORD,
   email: 'ultraman@gmail.com',
   name: 'Ultraman',
   role: 'admin',
