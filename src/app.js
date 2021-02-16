@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const db = require('mongoose');
 const express = require('express');
+const bodyParser = require('body-parser');
 const logger = require('./lib/logger');
 const routes = require('./routes');
 const { errorHandler, requestLog } = require('./middlewares');
@@ -19,7 +20,8 @@ if (!(process.env.AUTAN_BASIC_USER && process.env.AUTAN_BASIC_PASSWORD)) {
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(requestLog);
 app.use('/users', routes);
 app.use(errorHandler);
