@@ -25,7 +25,7 @@ describe('UserService#create', () => {
   describe('success', () => {
     beforeEach(() => {
       sinon.stub(Autan, 'register').withArgs(autanPayload).resolves(autanResult);
-      sinon.stub(User.prototype, 'save').returns()
+      sinon.mock(User).expects('create').resolves(user);
     });
 
     it('returns new user', async () => {
@@ -33,8 +33,8 @@ describe('UserService#create', () => {
         const userCreated = await UserService.create(payload);
         expect(userCreated).toHaveProperty('username', username);
         expect(userCreated).toHaveProperty('role', 'user');
-        expect(userCreated).toHaveProperty('auth_id', 'auth1001');
-        expect(userCreated).toHaveProperty('_id');
+        expect(userCreated).toHaveProperty('authId', 'auth1001');
+        expect(userCreated).toHaveProperty('id');
         expect(userCreated).toHaveProperty('name', name);
         expect(userCreated).not.toHaveProperty('password');
       } catch (err) {
