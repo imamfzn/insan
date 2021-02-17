@@ -16,11 +16,7 @@ describe('UserService#current', () => {
 
   describe('success', () => {
     beforeEach(() => {
-      sinon
-        .mock(User)
-        .expects('findOne')
-        .withArgs({ auth_id: authId })
-        .resolves(user);
+      sinon.mock(User).expects('findOne').withArgs({ auth_id: authId }).resolves(user);
 
       sinon.stub(Autan, 'get').withArgs(authId).resolves(autanResult);
     });
@@ -28,7 +24,7 @@ describe('UserService#current', () => {
     it('returns current user', async () => {
       try {
         const me = await UserService.current(authId);
-        expect(me).toHaveProperty('auth_id', authId);
+        expect(me).toHaveProperty('authId', authId);
         expect(me).toHaveProperty('username', 'user1001');
         expect(me).toHaveProperty('role', 'admin');
         expect(me).toHaveProperty('name', 'user 1001');

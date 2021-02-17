@@ -3,7 +3,7 @@ const UserService = require('../../src/services/user');
 const UserController = require('../../src/controllers/user');
 
 describe('UserController', () => {
-  const res = { json: () => {} };
+  const res = { status() { return this }, json() { } };
 
   afterEach(() => {
     sinon.restore();
@@ -14,7 +14,7 @@ describe('UserController', () => {
   });
 
   const next = sinon.spy();
-  const req = { params: {}, body: {}, token: {} };
+  const req = { params: {}, body: {}, user: {} };
 
   describe('#get', () => {
     const req = { params: { id: "1001" } };
@@ -40,8 +40,9 @@ describe('UserController', () => {
       });
 
       it('throws error', async () => {
-        await expect(UserController.get(req, res, next)).rejects
-        expect(next.withArgs(error).calledOnce).toBeTruthy();
+        UserController.get(req, res, (err) => {
+          expect(err).toEqual(error);
+        });
       });
     });
   });
